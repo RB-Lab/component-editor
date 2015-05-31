@@ -1,0 +1,10 @@
+//Custom app styles
+@import "../js/components/**/*.scss";
+
+html, body, #main, #main>section{
+	height: 100%
+}
+
+.active-component{
+	outline: 1px red dotted !important;
+}
