@@ -25,11 +25,12 @@
     "reactify": "~1.1.0",
     "watchify": "~3.1.0",
     "browserify": "~9.0.7",
-    "gulp-sass-bulk-import": "~0.2.0"
+    "gulp-sass-bulk-import": "~0.2.0",
+    "uglifyify": "~3.0.1"
   },
   "scripts": {
     "dev": "NODE_PATH=src/js gulp --type dev",
     "start": "NODE_PATH=src/js gulp",
-    "build": "gulp build"
+    "build": "NODE_PATH=src/js gulp build"
   }
 }

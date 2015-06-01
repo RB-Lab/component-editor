@@ -23,7 +23,7 @@ module.exports = {
 	},
 	browserify: {
 		settings: {
-			transform: ['reactify', 'babelify']
+			transform: ['reactify', 'babelify', 'uglifyify']
 		},
 		src: src + '/js/index.jsx',
 		dest: dest + '/js',
@@ -33,6 +33,10 @@ module.exports = {
 	html: {
 		src: 'src/index.html',
 		dest: dest
+	},
+	assets: {
+		src: 'src/assets/**/*',
+		dest: dest + '/assets'
 	},
 	watch: {
 		src: 'src/**/*.*',
