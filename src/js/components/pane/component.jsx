@@ -59,7 +59,7 @@ let Pane = React.createClass({
 	render() {
 		return (
 			<aside style={{
-					width: '30%',
+					width: '20%',
 					float: 'right',
 					height: '100%',
 					borderLeft: '1px solid #d0d0d0',

@@ -1,6 +1,7 @@
 const React = require('react');
 const Pane = require('components/pane/component.jsx');
 const WorkSpace = require('components/workspace/component.jsx');
+const PropsPane = require('components/props-pane/component.jsx');
 const {Button} = require('react-bootstrap');
 const reactToJsx = require('react-to-jsx');
 
@@ -75,6 +76,11 @@ let App = React.createClass({
 		this.setActiveComponent(null);
 	},
 
+	updateComponent(newProps){
+		this.activeComponent.props = newProps;
+		this.props.notify();
+	},
+
 	render() {
 		return (
 			<section>
@@ -85,6 +91,9 @@ let App = React.createClass({
 					textAlign: 'right'}}>
 					<Button onClick={this.export}>Export</Button>
 				</nav>
+				<PropsPane
+					save={this.updateComponent.bind(this)}
+					component={this.activeComponent}/>
 				<WorkSpace onClick={this.resetActiveComponent}>
 					{schema2VDOM(this.workSpaceChilds, this.setActiveComponent)}
 				</WorkSpace>
