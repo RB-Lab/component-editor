@@ -67,7 +67,11 @@ let App = React.createClass({
 		}
 		this.activeComponent = component;
 		if(component){
-			this.activeComponent.props.className = 'active-component';
+			if(this.activeComponent.props.className){
+				this.activeComponent.props.className += ' active-component';
+			} else {
+				this.activeComponent.props.className = 'active-component';
+			}
 		}
 		this.props.notify();
 	},
