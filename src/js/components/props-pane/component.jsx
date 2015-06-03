@@ -60,10 +60,11 @@ let Pane = React.createClass({
 			<aside style={{
 					width: '20%',
 					float: 'left',
+					marginTop: '-43px',
 					height: '100%',
 					borderRight: '1px solid #d0d0d0',
 					backgroundColor: '#F7F7F7',
-					padding: '0 10px'
+					padding: '43px 10px 0'
 				}}>
 				<h4>Props</h4>
 				{this.propInputs}

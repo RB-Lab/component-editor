@@ -1,6 +1,6 @@
 const React = require('react');
 const {Button, Input, Row, Col} = require('react-bootstrap');
-
+const NameModalTrigger = require('components/ui/name-modal.jsx');
 
 let Pane = React.createClass({
 
@@ -63,9 +63,12 @@ let Pane = React.createClass({
 					width: '20%',
 					float: 'right',
 					height: '100%',
+					marginTop: '-43px',
+					paddingTop: '43px',
 					borderLeft: '1px solid #d0d0d0',
 					backgroundColor: '#F7F7F7',
-					paddingLeft: '10px'
+					paddingLeft: '10px',
+					position: 'relative'
 				}}>
 				<h4>Grid</h4>
 				<Button onClick={this.addRow}>Row</Button>
@@ -74,6 +77,9 @@ let Pane = React.createClass({
 				<h4>Controls</h4>
 				<Button onClick={this.addButton}>Button</Button><br/>
 				<Button onClick={this.addTextInput}>Input</Button>
+
+				<NameModalTrigger onOk={this.props.makeCustom} />
+
 			</aside>
 		);
 	}

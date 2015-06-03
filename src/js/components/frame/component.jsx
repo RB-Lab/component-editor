@@ -85,12 +85,19 @@ let App = React.createClass({
 		this.props.notify();
 	},
 
+	makeCustom(){
+		console.log(reactToJsx(schema2VDOM(this.activeComponent)));
+	},
+
 	render() {
 		return (
 			<section>
+
 				<nav style={{
 					padding: '0.3em 1em',
 					borderBottom: '1px #7B7B7B solid',
+					zIndex: 1,
+					position: 'relative',
 					background: '#E7E7E7',
 					textAlign: 'right'}}>
 					<Button onClick={this.export}>Export</Button>
@@ -101,7 +108,7 @@ let App = React.createClass({
 				<WorkSpace onClick={this.resetActiveComponent}>
 					{schema2VDOM(this.workSpaceChilds, this.setActiveComponent)}
 				</WorkSpace>
-				<Pane addComponent={this.addComponent}/>
+				<Pane addComponent={this.addComponent} makeCustom={this.makeCustom}/>
 			</section>
 		);
 	}
