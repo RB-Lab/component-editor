@@ -35,10 +35,35 @@ function schema2VDOM(schema, onClick){
 	return parse(schema);
 }
 
+function indent(spaces, text){
+	spaces = new Array(spaces).join(' ');
+	return spaces + text.replace(/\n/g, '\n' + spaces);
+}
+
+function wrapInDiv(children){
+	return React.createElement(
+			'div',
+			{},
+			children
+		);
+}
+
+function exportToText(name, children){
+	var text = 'const ' + name + ' = React.createClass({\n' +
+		'    render(){\n' +
+		'        return (\n' +
+		indent(12, reactToJsx(wrapInDiv(schema2VDOM(children)))) +
+		'        );\n' +
+		'    }\n' +
+		'});';
+	return text;
+}
+
 let App = React.createClass({
 
 	workSpaceChilds: [],
 	customComponents: [],
+	customComponentsToExport: [],
 
 	activeComponent: null,
 
@@ -56,8 +81,12 @@ let App = React.createClass({
 	},
 
 	export(){
-		console.log(reactToJsx(schema2VDOM(this.workSpaceChilds)));
-		console.log('CUSTOM COMPONENTS');
+		console.log('/* -- CUSTOM COMPONENTS -- */');
+		this.customComponentsToExport.forEach((c) => {
+			console.log(exportToText(c.displayName, c.children));
+		});
+		console.log('/* -- APP ITSELF -- */');
+		console.log(exportToText('App', this.workSpaceChilds));
 	},
 
 	setActiveComponent(component){
@@ -90,15 +119,15 @@ let App = React.createClass({
 		let newElement = React.createClass({
 			displayName: elementName,
 			render: function(){
-				return React.createElement(
-						'div',
-						{},
-						schema2VDOM(newElementsChildren)
-					);
+				return wrapInDiv(schema2VDOM(newElementsChildren));
 			}
 		});
 		this.activeComponent.children = [{element: newElement}];
 		this.customComponents.push(newElement);
+		this.customComponentsToExport.push({
+			displayName: elementName,
+			children: newElementsChildren
+		});
 		// TODO save somewhere new Elements itselfs
 		this.props.notify();
 	},
