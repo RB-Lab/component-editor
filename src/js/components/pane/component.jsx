@@ -40,8 +40,7 @@ let Pane = React.createClass({
 				style: {
 					minHeight: '20px',
 					outline: '1px #ddd solid'
-				},
-				className: 'bla-bla'
+				}
 			}
 		});
 	},

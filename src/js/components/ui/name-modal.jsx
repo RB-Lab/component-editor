@@ -5,7 +5,7 @@ const {Button, Modal, Input, OverlayMixin} = require('react-bootstrap');
 const NameModal = React.createClass({
 
 	onOk(){
-		this.props.onOk(this.refs.name.value);
+		this.props.onOk(this.refs.name.getValue());
 		this.props.close();
 	},
 

@@ -1,4 +1,5 @@
 const React = require('react');
+const _ = require('lodash');
 const Pane = require('components/pane/component.jsx');
 const WorkSpace = require('components/workspace/component.jsx');
 const PropsPane = require('components/props-pane/component.jsx');
@@ -85,8 +86,16 @@ let App = React.createClass({
 		this.props.notify();
 	},
 
-	makeCustom(){
-		console.log(reactToJsx(schema2VDOM(this.activeComponent)));
+	makeCustom(elementName){
+		let newElementsChildren = _.clone(this.activeComponent.children);
+		let newElement = React.createClass({
+			displayName: elementName,
+			render: function(){
+				return schema2VDOM(newElementsChildren);
+			}
+		});
+		this.activeComponent.element = newElement;
+		delete this.activeComponent.children;
 	},
 
 	render() {
