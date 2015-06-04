@@ -6,10 +6,7 @@ const PropsPane = require('components/props-pane/component.jsx');
 const {Button} = require('react-bootstrap');
 const reactToJsx = require('react-to-jsx');
 
-var orginalSchema;
-
 function schema2VDOM(schema, onClick){
-	orginalSchema = schema;
 	function parse(schema){
 		if(Array.isArray(schema)){
 			return schema.map(parse);
@@ -41,6 +38,7 @@ function schema2VDOM(schema, onClick){
 let App = React.createClass({
 
 	workSpaceChilds: [],
+	customComponents: [],
 
 	activeComponent: null,
 
@@ -58,7 +56,8 @@ let App = React.createClass({
 	},
 
 	export(){
-		console.log(reactToJsx(schema2VDOM(orginalSchema)));
+		console.log(reactToJsx(schema2VDOM(this.workSpaceChilds)));
+		console.log('CUSTOM COMPONENTS');
 	},
 
 	setActiveComponent(component){
@@ -91,17 +90,22 @@ let App = React.createClass({
 		let newElement = React.createClass({
 			displayName: elementName,
 			render: function(){
-				return schema2VDOM(newElementsChildren);
+				return React.createElement(
+						'div',
+						{},
+						schema2VDOM(newElementsChildren)
+					);
 			}
 		});
-		this.activeComponent.element = newElement;
-		delete this.activeComponent.children;
+		this.activeComponent.children = [{element: newElement}];
+		this.customComponents.push(newElement);
+		// TODO save somewhere new Elements itselfs
+		this.props.notify();
 	},
 
 	render() {
 		return (
 			<section>
-
 				<nav style={{
 					padding: '0.3em 1em',
 					borderBottom: '1px #7B7B7B solid',
@@ -117,7 +121,11 @@ let App = React.createClass({
 				<WorkSpace onClick={this.resetActiveComponent}>
 					{schema2VDOM(this.workSpaceChilds, this.setActiveComponent)}
 				</WorkSpace>
-				<Pane addComponent={this.addComponent} makeCustom={this.makeCustom}/>
+				<Pane
+					ref='componentPicker'
+					addComponent={this.addComponent}
+					makeCustom={this.makeCustom}
+					customComponents={this.customComponents}/>
 			</section>
 		);
 	}

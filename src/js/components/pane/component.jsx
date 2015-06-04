@@ -56,6 +56,15 @@ let Pane = React.createClass({
 			}
 		});
 	},
+
+	addCustomComponent(component){
+		return () => {
+			this.props.addComponent({
+				element: component
+			});
+		};
+	},
+
 	render() {
 		return (
 			<aside style={{
@@ -76,7 +85,14 @@ let Pane = React.createClass({
 				<h4>Controls</h4>
 				<Button onClick={this.addButton}>Button</Button><br/>
 				<Button onClick={this.addTextInput}>Input</Button>
-
+				<h4>Custom components</h4>
+				{this.props.customComponents.map((comp) => {
+					return (
+						<Button onClick={this.addCustomComponent(comp)}>
+							{comp.displayName}
+						</Button>
+					);
+				})}
 				<NameModalTrigger onOk={this.props.makeCustom} />
 
 			</aside>
