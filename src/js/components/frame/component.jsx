@@ -3,7 +3,7 @@ const _ = require('lodash');
 const Pane = require('components/pane/component.jsx');
 const WorkSpace = require('components/workspace/component.jsx');
 const PropsPane = require('components/props-pane/component.jsx');
-const {Button} = require('react-bootstrap');
+const ModalExportTrigger = require('components/ui/modal-export.jsx');
 const reactToJsx = require('react-to-jsx');
 
 function schema2VDOM(schema, onClick){
@@ -51,8 +51,8 @@ function wrapInDiv(children){
 function exportToText(name, children){
 	var text = 'const ' + name + ' = React.createClass({\n' +
 		'    render(){\n' +
-		'        return (\n' +
-		indent(12, reactToJsx(wrapInDiv(schema2VDOM(children)))) +
+		'        return (\n\n' +
+		indent(12, reactToJsx(wrapInDiv(schema2VDOM(children)))) + '\n' +
 		'        );\n' +
 		'    }\n' +
 		'});';
@@ -81,12 +81,15 @@ let App = React.createClass({
 	},
 
 	export(){
-		console.log('/* -- CUSTOM COMPONENTS -- */');
-		this.customComponentsToExport.forEach((c) => {
-			console.log(exportToText(c.displayName, c.children));
-		});
-		console.log('/* -- APP ITSELF -- */');
-		console.log(exportToText('App', this.workSpaceChilds));
+		return {
+			components: this.customComponentsToExport.map((c) => {
+				return {
+					name: c.displayName,
+					body: exportToText(c.displayName, c.children)
+				};
+			}),
+			app: exportToText('App', this.workSpaceChilds)
+		};
 	},
 
 	setActiveComponent(component){
@@ -142,7 +145,7 @@ let App = React.createClass({
 					position: 'relative',
 					background: '#E7E7E7',
 					textAlign: 'right'}}>
-					<Button onClick={this.export}>Export</Button>
+					<ModalExportTrigger export={this.export} />
 				</nav>
 				<PropsPane
 					save={this.updateComponent.bind(this)}

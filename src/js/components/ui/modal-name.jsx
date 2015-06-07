@@ -11,7 +11,7 @@ const NameModal = React.createClass({
 
 	render(){
 		return (
-		<Modal title='Modal heading' onRequestHide={this.props.close}>
+			<Modal title='Modal heading' onRequestHide={this.props.close}>
 				<div className='modal-body'>
 					<Input ref='name' type='text' placeholder='Enter name' />
 				</div>
