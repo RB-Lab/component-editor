@@ -1,9 +1,9 @@
 const React = require('react');
 const _ = require('lodash');
-const Pane = require('components/pane/component.jsx');
-const WorkSpace = require('components/workspace/component.jsx');
-const PropsPane = require('components/props-pane/component.jsx');
-const ModalExportTrigger = require('components/ui/modal-export.jsx');
+const ComponentsPane = require('components/components-pane.jsx');
+const WorkSpace = require('components/workspace.jsx');
+const PropsPane = require('components/props-pane.jsx');
+const ModalExportTrigger = require('components/modals/modal-export.jsx');
 const reactToJsx = require('react-to-jsx');
 
 function schema2VDOM(schema, onClick){
@@ -153,7 +153,7 @@ let App = React.createClass({
 				<WorkSpace onClick={this.resetActiveComponent}>
 					{schema2VDOM(this.workSpaceChilds, this.setActiveComponent)}
 				</WorkSpace>
-				<Pane
+				<ComponentsPane
 					ref='componentPicker'
 					addComponent={this.addComponent}
 					makeCustom={this.makeCustom}

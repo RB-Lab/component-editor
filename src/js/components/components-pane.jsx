@@ -1,6 +1,6 @@
 const React = require('react');
 const {Button, Input, Row, Col} = require('react-bootstrap');
-const NameModalTrigger = require('components/ui/modal-name.jsx');
+const NameModalTrigger = require('components/modals/modal-name.jsx');
 
 let Pane = React.createClass({
 
