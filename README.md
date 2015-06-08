@@ -29,15 +29,25 @@ $ npm run build
 
 - refactor Frame (ReFlux?)
 	- get rid of workspace-specific props in exported jsx
-- add ability to delete active component
+- add ability to delete active component (+by `del` key)
+- selecting custom components as well as standard
+- save custom components names on `enter` hit and set focus into field
+- add more components
+	- to bootsrap pane
+	- standard pane (iterator etc)
+	- ability to import components
+		- build-in libraries
+		- export from npm (?...)
 - beter prpopety management
 	- list through propTypes
 	- custom porps
+	- save props on blur or on `enter` hit
+	- get rid of inline functions
 	- logic and props bindings (`{this.props.foo}`, `{this.doBar}`)
 - logic management
 - impots 
 	- panes to injecte collections?
 	- text of imports
-- deal with real files
+- deal with real files (FileSystem API, server call and json or at least data uri http://goo.gl/hDYC4p)
 - package.json creator
-
+- component diagramm
