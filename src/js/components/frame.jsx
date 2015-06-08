@@ -1,63 +1,12 @@
 const React = require('react');
 const _ = require('lodash');
+const schema2VDOM = require('lib/schema2react');
+const exportToText = require('lib/react2text');
+const wrapInDiv = require('lib/wrap-in-div');
 const ComponentsPane = require('components/components-pane.jsx');
 const WorkSpace = require('components/workspace.jsx');
 const PropsPane = require('components/props-pane.jsx');
 const ModalExportTrigger = require('components/modals/modal-export.jsx');
-const reactToJsx = require('react-to-jsx');
-
-function schema2VDOM(schema, onClick){
-	function parse(schema){
-		if(Array.isArray(schema)){
-			return schema.map(parse);
-		} else
-		if (typeof schema === 'object'){
-			if(onClick){
-				if(!schema.props){
-					schema.props = {};
-				}
-				schema.props.onClick = function(e){
-					e.stopPropagation();
-					onClick(schema);
-				};
-			}
-			return React.createElement(
-				schema.element,
-				schema.props,
-				parse(schema.children)
-			);
-		} else
-		if (typeof schema === 'string' || typeof schema === 'number'){
-			return schema;
-		}
-	}
-
-	return parse(schema);
-}
-
-function indent(spaces, text){
-	spaces = new Array(spaces).join(' ');
-	return spaces + text.replace(/\n/g, '\n' + spaces);
-}
-
-function wrapInDiv(children){
-	return React.createElement(
-			'div',
-			{},
-			children
-		);
-}
-
-function exportToText(name, children){
-	var text = 'const ' + name + ' = React.createClass({\n' +
-		'    render(){\n' +
-		'        return (\n\n' +
-		indent(12, reactToJsx(wrapInDiv(schema2VDOM(children)))) + '\n' +
-		'        );\n' +
-		'    }\n' +
-		'});';
-	return text;
-}
 
 let App = React.createClass({
 
