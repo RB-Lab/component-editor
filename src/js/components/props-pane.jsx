@@ -1,29 +1,8 @@
 const React = require('react');
 const {Button, Input} = require('react-bootstrap');
-var AceEditor  = require('react-ace');
+const cssConvert = require('lib/css');
+const AceEditor  = require('react-ace');
 require('brace/mode/css');
-var camelcase = require('camelcase');
-var decamelize = require('decamelize');
-
-function toCss(style){
-	let result = '{\n';
-	for(var key in style){
-		result += `\t${decamelize(key, '-')}: ${style[key]};\n`;
-	}
-	return result + '}\n';
-}
-
-function toObject(style){
-	style = style.match(/{(.|\s)+}/gm)[0].replace(/{|}/g, '');
-	return style.split('\n').reduce((res, line) => {
-		let lineArr = line.split(':');
-		if(lineArr.length !== 2){
-			return res;
-		}
-		res[camelcase(lineArr[0].trim())] = lineArr[1].replace(';', '').trim();
-		return res;
-	}, {});
-}
 
 let Pane = React.createClass({
 
@@ -38,14 +17,14 @@ let Pane = React.createClass({
 	},
 
 	createState(nextProps){
-		var props = nextProps || this.props;
+		let props = nextProps || this.props;
 		if(!props.component){
 			return {};
 		}
 		let state = {};
-		for(var i in props.component.props){
+		for(let i in props.component.props){
 			if(i === 'style'){
-				state[i] = toCss(props.component.props[i]);
+				state[i] = cssConvert.object2css(props.component.props[i]);
 				continue;
 			}
 			state[i] = props.component.props[i];
@@ -97,7 +76,7 @@ let Pane = React.createClass({
 		for(var i in this.state){
 			if(this.state[i]){
 				if(i === 'style'){
-					newProps.style = toObject(this.currentComponentStyle);
+					newProps.style = cssConvert.css2object(this.currentComponentStyle);
 					continue;
 				}
 				newProps[i] = this.state[i];
