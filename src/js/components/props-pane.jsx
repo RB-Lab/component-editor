@@ -67,7 +67,8 @@ let Pane = React.createClass({
 							type='text'
 							value={this.state[i]}
 							label={i}
-							onChange={fillTheProp(i)}/>);
+							onChange={fillTheProp(i)}
+							onBlur={this.save}/>);
 		}
 	},
 

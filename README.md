@@ -41,10 +41,12 @@ $ npm run build
 - beter prpopety management
 	- list through propTypes
 	- custom porps
-	- save props on blur or on `enter` hit
+	- ~~save props on blur or on `enter` hit~~
+	- move styles to other tab
 	- get rid of inline functions
 	- logic and props bindings (`{this.props.foo}`, `{this.doBar}`)
 - logic management
+	- button and pop-up for it, available only for custom components
 - impots 
 	- panes to injecte collections?
 	- text of imports
