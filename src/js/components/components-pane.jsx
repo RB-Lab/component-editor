@@ -24,7 +24,8 @@ const ComponentsPane = React.createClass({
 					borderLeft: '1px solid #d0d0d0',
 					backgroundColor: '#F7F7F7',
 					paddingLeft: '10px',
-					position: 'relative'
+					position: 'relative',
+					overflow: 'auto'
 				}}>
 				<BootstrapPane {...this.props} />
 				<h4>Custom components</h4>

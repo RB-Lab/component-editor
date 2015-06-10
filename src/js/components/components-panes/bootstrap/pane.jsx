@@ -5,6 +5,9 @@ const ColInjector = require('./injectors/col.jsx');
 const RowInjector = require('./injectors/row.jsx');
 const InputInjector = require('./injectors/input.jsx');
 const ProgressBarInjector = require('./injectors/progressbar.jsx');
+const NavbarInjector = require('./injectors/nav-bar.jsx');
+const NavInjector = require('./injectors/nav.jsx');
+const NavItemInjector = require('./injectors/nav-item.jsx');
 
 const BootstrapPane = React.createClass({
 
@@ -19,6 +22,10 @@ const BootstrapPane = React.createClass({
 				<ButtonInjector {...this.props}/>
 				<InputInjector {...this.props}/>
 				<ProgressBarInjector {...this.props}/>
+				<h4>Navigation</h4>
+				<NavbarInjector {...this.props}/>
+				<NavInjector {...this.props}/>
+				<NavItemInjector {...this.props}/>
 			</section>
 		);
 	}

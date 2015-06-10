@@ -47,6 +47,7 @@ $ npm run build
 	- get rid of inline functions
 	- logic and props bindings (`{this.props.foo}`, `{this.doBar}`)
 	- edit inner text
+	- add availability to go to parent element
 - logic management
 	- button and pop-up for it, available only for custom components
 - impots 
