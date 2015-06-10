@@ -45,7 +45,11 @@ let Pane = React.createClass({
 			this.propInputs.push(<Input
 							type='text'
 							value={this.state[i]}
+							bsSize='small'
 							label={i}
+							// FIXME long attribute nmes requre much more space (separate line)
+							labelClassName='col-xs-6 col-md-4'
+							wrapperClassName='col-xs-6 col-md-8'
 							onChange={fillTheProp(i)}
 							onBlur={this.save}/>);
 		}
@@ -77,14 +81,13 @@ let Pane = React.createClass({
 			return <aside style={style} />;
 		}
 		this.fillPropInputs();
-		let name = this.props.component.element.displayName
+		let name = this.props.component.element.displayName;
 		return (
 			<aside style={style}>
 				<h3>{name}</h3>
 				<TabbedArea defaultActiveKey={1}>
 						<TabPane eventKey={1} tab='Props'>
 							{this.propInputs}
-							<Button>Edit component's logic</Button>
 						</TabPane>
 						<TabPane eventKey={2} tab='Style'>
 							<AceEditor
@@ -97,6 +100,9 @@ let Pane = React.createClass({
 								}}
 								name='style-editor'/>
 							<Button onClick={this.save}>Save</Button>
+						</TabPane>
+						<TabPane eventKey={3} tab='Logic'>
+							<Button style={{marginTop:'0.5em'}}>Edit component's logic</Button>
 						</TabPane>
 					</TabbedArea>
 			</aside>

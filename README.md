@@ -39,8 +39,9 @@ $ npm run build
 		- build-in libraries
 		- export from npm (?...)
 - beter prpopety management
-	- list through propTypes
+	- ~~list through propTypes~~
 	- custom porps
+		- already definde custom props
 	- ~~save props on blur or on `enter` hit~~
 	- ~~move styles to other tab~~
 	- get rid of inline functions
