@@ -46,6 +46,7 @@ $ npm run build
 	- ~~move styles to other tab~~
 	- get rid of inline functions
 	- logic and props bindings (`{this.props.foo}`, `{this.doBar}`)
+	- edit inner text
 - logic management
 	- button and pop-up for it, available only for custom components
 - impots 
