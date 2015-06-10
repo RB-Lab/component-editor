@@ -11,7 +11,11 @@ module.exports.object2css = function object2css(style){
 };
 
 module.exports.css2object = function css2object(style){
-	style = style.match(/{(.|\s)+}/gm)[0].replace(/{|}/g, '');
+	style = style.match(/{(.|\s)+}/gm);
+	if(!style){
+		return {};
+	}
+	style = style[0].replace(/{|}/g, '');
 	return style.split('\n').reduce((res, line) => {
 		let lineArr = line.split(':');
 		if(lineArr.length !== 2){

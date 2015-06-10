@@ -42,7 +42,7 @@ $ npm run build
 	- list through propTypes
 	- custom porps
 	- ~~save props on blur or on `enter` hit~~
-	- move styles to other tab
+	- ~~move styles to other tab~~
 	- get rid of inline functions
 	- logic and props bindings (`{this.props.foo}`, `{this.doBar}`)
 - logic management

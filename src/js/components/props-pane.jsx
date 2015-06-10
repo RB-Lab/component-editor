@@ -1,5 +1,5 @@
 const React = require('react');
-const {Button, Input} = require('react-bootstrap');
+const {Button, Input, TabbedArea, TabPane} = require('react-bootstrap');
 const cssConvert = require('lib/css');
 const AceEditor  = require('react-ace');
 require('brace/mode/css');
@@ -23,8 +23,7 @@ let Pane = React.createClass({
 		}
 		let state = {};
 		for(let i in props.component.props){
-			if(i === 'style'){
-				state[i] = cssConvert.object2css(props.component.props[i]);
+			if(i === 'style') {
 				continue;
 			}
 			state[i] = props.component.props[i];
@@ -38,31 +37,11 @@ let Pane = React.createClass({
 
 		var fillTheProp = (prop) => {
 			return (e) => {
-				if(prop === 'style') {
-					this.currentComponentStyle = e;
-					return;
-				}
 				this.setState({[prop]: e.target.value});
 			};
 		};
 
-		for(var i in this.state){
-			if(i === 'style'){
-				var name = this.props.component.element.displayName;
-				this.propInputs.push(
-				<div>
-					<b>style</b>
-					<AceEditor
-						mode='css'
-						width='100%'
-						height='8em'
-						value={name + this.state[i]}
-						onChange={fillTheProp(i)}
-						name='style-editor'/>
-				</div>
-				);
-				continue;
-			}
+		for(var i in this.props.component.element.propTypes){
 			this.propInputs.push(<Input
 							type='text'
 							value={this.state[i]}
@@ -76,13 +55,10 @@ let Pane = React.createClass({
 		let newProps = {};
 		for(var i in this.state){
 			if(this.state[i]){
-				if(i === 'style'){
-					newProps.style = cssConvert.css2object(this.currentComponentStyle);
-					continue;
-				}
 				newProps[i] = this.state[i];
 			}
 		}
+		newProps.style = cssConvert.css2object(this.currentComponentStyle);
 		this.props.save(newProps);
 	},
 
@@ -92,6 +68,7 @@ let Pane = React.createClass({
 			float: 'left',
 			marginTop: '-43px',
 			height: '100%',
+			overflow: 'auto',
 			borderRight: '1px solid #d0d0d0',
 			backgroundColor: '#F7F7F7',
 			padding: '43px 10px 0'
@@ -100,13 +77,28 @@ let Pane = React.createClass({
 			return <aside style={style} />;
 		}
 		this.fillPropInputs();
+		let name = this.props.component.element.displayName
 		return (
 			<aside style={style}>
-				<h3>{this.props.component.element.displayName}</h3>
-				<h4>Props</h4>
-				{this.propInputs}
-				<h4>Logic</h4>
-				<Button onClick={this.save}>Save</Button>
+				<h3>{name}</h3>
+				<TabbedArea defaultActiveKey={1}>
+						<TabPane eventKey={1} tab='Props'>
+							{this.propInputs}
+							<Button>Edit component's logic</Button>
+						</TabPane>
+						<TabPane eventKey={2} tab='Style'>
+							<AceEditor
+								mode='css'
+								width='100%'
+								height='8em'
+								value={name + cssConvert.object2css(this.props.component.props.style)}
+								onChange={(value) => {
+									this.currentComponentStyle = value;
+								}}
+								name='style-editor'/>
+							<Button onClick={this.save}>Save</Button>
+						</TabPane>
+					</TabbedArea>
 			</aside>
 		);
 	}
