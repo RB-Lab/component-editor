@@ -4,6 +4,7 @@ const ButtonGroupInjector = require('./injectors/button-group.jsx');
 const ColInjector = require('./injectors/col.jsx');
 const RowInjector = require('./injectors/row.jsx');
 const InputInjector = require('./injectors/input.jsx');
+const ProgressBarInjector = require('./injectors/progressbar.jsx');
 
 const BootstrapPane = React.createClass({
 
@@ -17,6 +18,7 @@ const BootstrapPane = React.createClass({
 				<ButtonGroupInjector {...this.props}/>
 				<ButtonInjector {...this.props}/>
 				<InputInjector {...this.props}/>
+				<ProgressBarInjector {...this.props}/>
 			</section>
 		);
 	}
