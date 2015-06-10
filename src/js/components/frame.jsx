@@ -62,7 +62,8 @@ let App = React.createClass({
 	},
 
 	updateComponent(newProps){
-		this.activeComponent.props = newProps;
+		_.assign(this.activeComponent.props, newProps.props);
+		this.activeComponent.children = newProps.children;
 		this.props.notify();
 	},
 

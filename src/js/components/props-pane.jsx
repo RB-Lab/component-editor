@@ -12,7 +12,7 @@ let Pane = React.createClass({
 		return this.createState();
 	},
 
-	componentWillReceiveProps(nextProps){
+	componentWillReceiveProps(nextProps){ // when selecting new component and pane filled with it's props
 		this.replaceState(this.createState(nextProps));
 	},
 
@@ -21,13 +21,18 @@ let Pane = React.createClass({
 		if(!props.component){
 			return {};
 		}
-		let state = {};
+		let state = {props: {}};
 		for(let i in props.component.props){
 			if(i === 'style') {
 				continue;
 			}
-			state[i] = props.component.props[i];
+			state.props[i] = props.component.props[i];
 		}
+		let chld = props.component.children;
+		if(chld && chld.length === 1 && typeof chld[0] === 'string'){
+			state.text = chld[0];
+		}
+
 		return state;
 	},
 
@@ -37,14 +42,14 @@ let Pane = React.createClass({
 
 		var fillTheProp = (prop) => {
 			return (e) => {
-				this.setState({[prop]: e.target.value});
+				this.setState({props: {[prop]: e.target.value}});
 			};
 		};
 
 		for(var i in this.props.component.element.propTypes){
 			this.propInputs.push(<Input
 							type='text'
-							value={this.state[i]}
+							value={this.state.props[i]}
 							bsSize='small'
 							label={i}
 							// FIXME long attribute nmes requre much more space (separate line)
@@ -55,15 +60,42 @@ let Pane = React.createClass({
 		}
 	},
 
+	addTextEdit(){
+		if(typeof this.state.text === 'string'){
+			return (
+				<div>
+					<hr style={{clear: 'both'}}/>
+					<Input
+						type='text'
+						value={this.state.text}
+						bsSize='small'
+						label='Inner text'
+						labelClassName='col-xs-6 col-md-4'
+						wrapperClassName='col-xs-6 col-md-8'
+						onChange={(e) => {
+							this.setState({text: e.target.value});
+						}}
+						onBlur={this.save}/>
+				</div>
+			);
+		}
+	},
+
 	save(){
 		let newProps = {};
-		for(var i in this.state){
-			if(this.state[i]){
-				newProps[i] = this.state[i];
+		for(var i in this.state.props){
+			if(this.state.props[i]){
+				newProps[i] = this.state.props[i];
 			}
 		}
 		newProps.style = cssConvert.css2object(this.currentComponentStyle);
-		this.props.save(newProps);
+		let schemaDiff = {
+			props: newProps
+		}
+		if(typeof this.state.text === 'string'){
+			schemaDiff.children = [this.state.text];
+		}
+		this.props.save(schemaDiff);
 	},
 
 	render() {
@@ -88,6 +120,7 @@ let Pane = React.createClass({
 				<TabbedArea defaultActiveKey={1}>
 						<TabPane eventKey={1} tab='Props'>
 							{this.propInputs}
+							{this.addTextEdit()}
 						</TabPane>
 						<TabPane eventKey={2} tab='Style'>
 							<AceEditor
