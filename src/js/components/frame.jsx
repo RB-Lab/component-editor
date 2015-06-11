@@ -80,15 +80,13 @@ let App = React.createClass({
 	makeCustom(elementName){
 		let newElementsChildren = _.clone(this.activeComponent.children);
 		let newElement = React.createClass({
-			onClick(){
-
-			},
 			displayName: elementName,
 			render: function(){
-				return wrapInDiv(schema2VDOM(newElementsChildren));
+				return wrapInDiv(schema2VDOM(newElementsChildren), this.props);
 			}
 		});
-		this.activeComponent.children = [{element: newElement}];
+		this.activeComponent.children = [];
+		this.addComponent({element: newElement});
 		this.customComponents.push(newElement);
 		this.customComponentsToExport.push({
 			displayName: elementName,
