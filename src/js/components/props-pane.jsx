@@ -91,9 +91,11 @@ let Pane = React.createClass({
 		newProps.style = cssConvert.css2object(this.currentComponentStyle);
 		let schemaDiff = {
 			props: newProps
-		}
+		};
 		if(typeof this.state.text === 'string'){
 			schemaDiff.children = [this.state.text];
+		}else{
+			schemaDiff.children = this.props.component.children;
 		}
 		this.props.save(schemaDiff);
 	},
