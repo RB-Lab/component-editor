@@ -38,6 +38,7 @@ $ npm run build
 	- ability to import components
 		- build-in libraries
 		- export from npm (?...)
+	- html (pane? editor?)
 - beter prpopety management
 	- ~~list through propTypes~~
 	- custom porps
@@ -48,7 +49,10 @@ $ npm run build
 	- logic and props bindings (`{this.props.foo}`, `{this.doBar}`)
 	- ~~edit inner text~~
 	- add availability to go to parent element
+	- propmaps?
 - make text editable from workspace, not from props pane
+- switch components states (pages)
+- preview
 - logic management
 	- button and pop-up for it, available only for custom components
 - impots 
