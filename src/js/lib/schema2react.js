@@ -1,20 +1,11 @@
 const React = require('react');
 
-function schema2VDOM(schema, onClick){
+function schema2VDOM(schema){
 	function parse(schema){
 		if(Array.isArray(schema)){
 			return schema.map(parse);
 		} else
 		if (typeof schema === 'object'){
-			if(onClick){
-				if(!schema.props){
-					schema.props = {};
-				}
-				schema.props.onClick = function(e){
-					e.stopPropagation();
-					onClick(schema);
-				};
-			}
 			return React.createElement(
 				schema.element,
 				schema.props,

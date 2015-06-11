@@ -10,13 +10,23 @@ const ModalExportTrigger = require('components/modals/modal-export.jsx');
 
 let App = React.createClass({
 
-	workSpaceChilds: [],
+	workSpaceChilds: [], // TODO get rid of workSpaceChilds,
+	//make just 'container' active component by default
 	customComponents: [],
 	customComponentsToExport: [],
 
 	activeComponent: null,
 
 	addComponent(component){
+
+		if(!component.props){
+			component.props = {};
+		}
+		component.props.onClick = function(e){
+			e.stopPropagation();
+			this.setActiveComponent(component);
+		}.bind(this);
+
 		if(this.activeComponent){
 			if(!this.activeComponent.children){
 				this.activeComponent.children = [];
@@ -70,6 +80,9 @@ let App = React.createClass({
 	makeCustom(elementName){
 		let newElementsChildren = _.clone(this.activeComponent.children);
 		let newElement = React.createClass({
+			onClick(){
+
+			},
 			displayName: elementName,
 			render: function(){
 				return wrapInDiv(schema2VDOM(newElementsChildren));
