@@ -53,8 +53,8 @@ let Pane = React.createClass({
 							bsSize='small'
 							label={i}
 							// FIXME long attribute nmes requre much more space (separate line)
-							labelClassName='col-xs-6 col-md-4'
-							wrapperClassName='col-xs-6 col-md-8'
+							labelClassName='col-xs-8 col-md-6 props-pane__label'
+							wrapperClassName='col-xs-4 col-md-6'
 							onChange={fillTheProp(i)}
 							onBlur={this.save}/>);
 		}
